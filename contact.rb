@@ -1,38 +1,37 @@
-class Contact
-  class ShortPassError < StandardError
-  end
+@testabc = 83
 
-  require 'byebug'
+class Contact
+  # class ShortPassError < StandardError
+  # end
  
-  attr_accessor :name, :email, :mobile_phone
+  attr_accessor :first_name, :last_name, :email, :phone_number, :importance
  
-  def initialize(first_name, last_name, email, mobile_phone, importance)
+  def initialize(first_name, last_name, email, phone_number, importance)
     @first_name =   first_name
     @last_name =    last_name
     @email =        email
-    @mobile_phone = mobile_phone
+    @phone_number = phone_number
     @importance =   importance
-
   end
  
   def to_s
-    "Name: #{first_name} #{last_name}, Mobile: (#{mobile_phone}), Email:(#{email}), Level: #{importance}"
+    "Name: #{first_name} #{last_name}, Mobile: (#{phone_number}), Email:(#{email}), Level: #{importance}"
   end
  
-  ## Class Methods
-  # class << self
-  #   def create(first_name, last_name, email, mobile_phone, importance)
-  #     Contact.new(first_name, last_name, email, mobile_phone, importance)
-  #   end
- 
-  #   def self.all
-  #     contact = Contact.all
-  #   end
-    
-  #   def self.find(name)
-  #     self.all.select {|contact| contact.name.include?(name)}
-  #   end
-    
-  # end
- 
+  # Class Methods
+
+  def self.create(first_name, last_name, email, phone_number, importance)
+    Contact.new(first_name, last_name, email, phone_number, importance)
+  end
+
+  def self.all
+    all = CSV.open('contacts.csv')
+    puts all
+  end
+  
+  def self.find(id)
+    Contact.detect {|contact| contact.id.include?(id)}
+  end  
+
+  
 end
