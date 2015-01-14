@@ -4,7 +4,7 @@ require_relative 'contact'
 require_relative 'contact_database'
 
 command = ARGV[0]
-cli_id = ARGV[1]
+@@cli_id = ARGV[1]
 
 def menu
   puts " "
@@ -39,9 +39,9 @@ def list_all
   puts contacts
 end
 
-def show_contact(keyword)
-  contact = read_csv
-  puts contact 
+def show_contact(cli_id)
+  result = Contact.show(@@cli_id)
+  puts result 
 end
 
 def find_contact(cli_id)
@@ -53,7 +53,7 @@ case command
   when "help" then menu
   when "create" then create_contact
   when "list" then list_all
-  when "show" then show_contact(0) if cli_id == true
+  when "show" then show_contact(@@cli_id)
   when "find" then find_contact(cli_id)
   else
     puts "Command not listed, sorry"

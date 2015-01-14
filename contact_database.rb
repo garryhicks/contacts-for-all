@@ -2,9 +2,10 @@ require 'csv'
 
 contacts = CSV.read('contacts.csv')
 puts "Database connected"
-byebug
-@@csv_data = []
+
 class ContactDatabase
+
+@@csv_data = []
 
   def self.write(contact)
     CSV.open('contacts.csv', 'a') do |new_contact|
