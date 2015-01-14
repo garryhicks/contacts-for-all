@@ -22,9 +22,9 @@ end
 
 def create_contact
   puts "Please enter the first name:"
-  first_name = STDIN.gets.chomp
+  first_name = STDIN.gets.chomp.capitalize
   puts "Please enter the last name:"
-  last_name = STDIN.gets.chomp
+  last_name = STDIN.gets.chomp.capitalize
   puts "Please enter the email address, if you have one:"
   email = STDIN.gets.chomp
   puts "Please enter the phone number of your contact, eg 888-888-8888"
@@ -45,7 +45,8 @@ def show_contact(cli_id)
 end
 
 def find_contact(cli_id)
-  contact = read_csv
+  result = Contact.find(@@cli_id)
+  puts result
 end
 
 
@@ -54,7 +55,7 @@ case command
   when "create" then create_contact
   when "list" then list_all
   when "show" then show_contact(@@cli_id)
-  when "find" then find_contact(cli_id)
+  when "find" then find_contact(@@cli_id)
   else
     puts "Command not listed, sorry"
 end

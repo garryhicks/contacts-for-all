@@ -4,12 +4,12 @@ class Contact
  
   attr_accessor :first_name, :last_name, :email, :phone_number, :id
  
-  def initialize(first_name, last_name, email, phone_number, id)
+  def initialize(first_name, last_name, email, phone_number)
     @first_name =   first_name
     @last_name =    last_name
     @email =        email
     @phone_number = phone_number
-    @id =           id
+    @id =           ContactDatabase.get_next_id
   end
  
   def to_s
@@ -18,17 +18,22 @@ class Contact
  
   # Class Methods
 
-  def self.create(first_name, last_name, email, phone_number, id)
-    Contact.new(first_name, last_name, email, phone_number, id)
+  def self.create(first_name, last_name, email, phone_number)
+    Contact.new(first_name, last_name, email, phone_number)
   end
 
   def self.all
-    all = CSV.open('contacts.csv')
+    all = ContactDatabase.read_from_csv
     puts all
   end
   
   def self.find(id)
-    Contact.detect {|contact| contact.id.include?(id)}
+    contacts = ContactDatabase.read_from_csv
+    contacts.each do |contact|
+      if contact.first == id
+        return contact
+      end
+    end
   end  
   
   def self.show(id)
