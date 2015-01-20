@@ -1,8 +1,7 @@
 class Contact
-  # class ShortPassError < StandardError
-  # end
- 
-  attr_accessor :first_name, :last_name, :email, :phone_number, :id
+  
+  attr_reader :id 
+  attr_accessor :first_name, :last_name, :email, :phone_number
  
   def initialize(first_name, last_name, email, phone_number)
     @first_name =   first_name
@@ -15,32 +14,38 @@ class Contact
   def to_s
     "Name: #{first_name} #{last_name}, Mobile: (#{phone_number}), Email:(#{email}), ID: (#{id})"
   end
+
+  def save
+
+  end
  
   # Class Methods
+  class << self
 
-  def self.create(first_name, last_name, email, phone_number)
-    Contact.new(first_name, last_name, email, phone_number)
-  end
-
-  def self.all
-    all = ContactDatabase.read_from_csv
-    puts all
-  end
-  
-  def self.find(id)
-    contacts = ContactDatabase.read_from_csv
-    contacts.each do |contact|
-      if contact.first == id
-        return contact
-      end
+    def create(first_name, last_name, email, phone_number)
+      Contact.new(first_name, last_name, email, phone_number)
     end
-  end  
-  
-  def self.show(id)
-    contacts = ContactDatabase.read_from_csv
-    contacts.each do |contact|
-      if contact.last == id
-        return contact
+
+    def all
+      all = ContactDatabase.read_from_csv
+      puts all
+    end
+    
+    def find(id)
+      contacts = ContactDatabase.read_from_csv
+      contacts.each do |contact|
+        if contact.first == id
+          return contact
+        end
+      end
+    end  
+    
+    def show(id)
+      contacts = ContactDatabase.read_from_csv
+      contacts.each do |contact|
+        if contact.last == id
+          return contact
+        end
       end
     end
   end
