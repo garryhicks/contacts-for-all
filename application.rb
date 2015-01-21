@@ -1,61 +1,21 @@
-require 'csv'
+require 'pg'
 require 'byebug'
-require_relative 'contact'
-require_relative 'contact_database'
+require_relative './contact'
 
-command = ARGV[0]
-@@cli_id = ARGV[1]
+conn = PG.connect(dbname: 'dcakv6hbhrelqh',
+        port: 5432,
+        host: 'ec2-54-83-204-104.compute-1.amazonaws.com',
+        user: 'awqnzeamhulegr',
+        password: '9s-9ahNRexGu1qT3oTYLYoQJ-l')
 
-def menu
-  puts " "
-  puts "Welcome to the app. These are the commands available"
-  puts " new                     - Create a new contact"
-  puts " list                    - List all contacts"
-  puts " show (<number here>)    - Display a single contact"
-  puts " find (<term here>)      - Display a single contact"
-  puts " "
-end
-
-def read_csv
-  CSV.read('contacts.csv')
-end
-
-def create_contact
-  puts "Please enter the first name:"
-  first_name = STDIN.gets.chomp.capitalize
-  puts "Please enter the last name:"
-  last_name = STDIN.gets.chomp.capitalize
-  puts "Please enter the email address, if you have one:"
-  email = STDIN.gets.chomp
-  puts "Please enter the phone number of your contact, eg 888-888-8888"
-  phone_number = STDIN.gets.chomp
-  contact = Contact.create(first_name,last_name,email,phone_number)
-  ContactDatabase.write(contact)
-  puts "Contact added."
-end
-
-def list_all
-  contacts = read_csv
-  puts contacts
-end
-
-def show_contact(cli_id)
-  result = Contact.show(@@cli_id)
-  puts result 
-end
-
-def find_contact(cli_id)
-  result = Contact.find(@@cli_id)
-  puts result
-end
+# c = Contact.new("john","chan","jc@gmail.com","123-456-2123")
+contact = Contact.destroy(5)
+byebug
+puts contact
 
 
-case command
-  when "help" then menu
-  when "create" then create_contact
-  when "list" then list_all
-  when "show" then show_contact(@@cli_id)
-  when "find" then find_contact(@@cli_id)
-  else
-    puts "Command not listed, sorry"
-end
+# conn.exec("SELECT * FROM contacts") do |rows|
+#   rows.each do |row|
+#     puts row
+#   end
+# end
